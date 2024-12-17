@@ -8,14 +8,17 @@ const app = express();
 
 // Define allowed origins for CORS
 const allowedOrigins = [
-  "https://your-frontend-vercel-domain.vercel.app", // Replace with your actual frontend URL
+  "https://employee-management-fsd-frontend.vercel.app", // Replace with your actual frontend URL
 ];
 
-// Enable CORS for specific origins
+// Enable CORS for specific origins and handle preflight requests
 app.use(
   cors({
-    origin: allowedOrigins,
-    methods: ["GET", "POST", "PUT", "DELETE"], // Optional: Define allowed methods
+    origin: allowedOrigins, // Your frontend URL
+    methods: ["GET", "POST", "PUT", "DELETE"], // Allow HTTP methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Allow specific headers
+    preflightContinue: false, // Handle preflight requests automatically
+    optionsSuccessStatus: 204, // Status code for successful preflight response
   })
 );
 
