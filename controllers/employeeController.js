@@ -32,9 +32,19 @@ const addEmployee = async (req, res) => {
       .status(201)
       .json({ message: "Employee added successfully", newEmployee });
   } catch (error) {
-    console.error("Error adding employee:", error); 
+    console.error("Error adding employee:", error);
     res.status(500).json({ message: "Server Error", error: error.message });
   }
 };
 
-module.exports = { addEmployee };
+const getEmployees = async (req, res) => {
+  try {
+    const employees = await Employee.findAll();
+    res.status(200).json(employees);
+  } catch (error) {
+    console.error("Error fetching employees:", error);
+    res.status(500).json({ message: "Server Error", error: error.message });
+  }
+};
+
+module.exports = { addEmployee, getEmployees };

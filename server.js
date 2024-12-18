@@ -8,6 +8,7 @@ const app = express();
 
 // Define allowed origins for CORS
 const allowedOrigins = [
+  "http://localhost:3000",
   "https://employee-management-fsd-frontend.vercel.app", // Replace with your actual frontend URL
 ];
 
@@ -31,7 +32,7 @@ const startServer = async () => {
   try {
     await connectDB();
 
-    await Employee.sync({ force: false }); // Sync the Employee model with the database
+    await Employee.sync({ force: false }); 
     console.log("Employee table synced.");
 
     app.listen(PORT, () => {
