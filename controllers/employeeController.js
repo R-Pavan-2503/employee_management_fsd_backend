@@ -15,7 +15,7 @@ const addEmployee = async (req, res) => {
     if (existingEmployee) {
       return res
         .status(400)
-        .json({ message: "Employee ID, Email or Phone already exists." });
+        .json({ message: "Employee ID, Email, or Phone already exists." });
     }
 
     const newEmployee = await Employee.create({
@@ -47,4 +47,21 @@ const getEmployees = async (req, res) => {
   }
 };
 
-module.exports = { addEmployee, getEmployees };
+const deleteEmployee = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deleted = await Employee.destroy({ where: { id } });
+    if (deleted) {
+      return res
+        .status(200)
+        .json({ message: "Employee deleted successfully." });
+    }
+    return res.status(404).json({ message: "Employee not found." });
+  } catch (error) {
+    console.error("Error deleting employee:", error);
+    res.status(500).json({ message: "Server Error", error: error.message });
+  }
+};
+
+module.exports = { addEmployee, getEmployees, deleteEmployee };
